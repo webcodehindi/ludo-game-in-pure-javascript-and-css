@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ludo.css">
+    <title>Ludo game using JavaScript</title>
+</head>
+<body class="center">
+    <div class="game-option center">
+        <div class="game-card">
+            <h2>Ludo game using Pure JavaScript & CSS</h2>
+            <div class="option center color">
+               <div class="bgred active"></div> 
+               <div class="bgblue"></div> 
+               <div class="bggreen"></div>  
+               <div class="bgyellow"></div>
+            </div>
+            <div class="option center player">
+                <div class="count center">3P</div>
+                <div class="count center active">2P</div>
+                <div class="count center">4P</div>
+            </div>
+
+            <button class="btn" type="button">Start Game</button>
+        </div>
+    </div>
+
+    <div class="board center">
+        <div class="grid1 w-2 h-2 center">
+            <div class="box h-2 w-2 bgred center">
+                <div class="inner">
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                </div>
+            </div>
+            <div class="run h-1 w-2 center left run1">
+                <div></div>
+                <div class="active bgred"></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="bgred"></div>
+                <div class="bgred"></div>
+                <div class="bgred"></div>
+                <div class="bgred"></div>
+                <div class="bgred active"></div>
+                <div></div>
+                <div></div>
+                <div class="active bgyellow"></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box h-2 w-2 bgyellow center">
+                <div class="inner">
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                </div>
+            </div>
+        </div>
+        <div class="grid2 w-1 h-2 center">
+            <div class="run h-2 w-2 center right run2">
+                <div></div>
+                <div></div>
+                <div class="active bgred"></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="bgblue"></div>
+                <div class="bgblue"></div>
+                <div class="bgblue"></div>
+                <div class="bgblue"></div>
+                <div class="bgblue active"></div>
+                <div></div>
+                <div class="active bgblue"></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="win h-1 w-2 bgblue"></div>
+            <div class="run h-2 w-2 center right run4">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="active bgyellow"></div>
+                <div></div>
+                <div class="bgyellow active"></div>
+                <div class="bgyellow"></div>
+                <div class="bgyellow"></div>
+                <div class="bgyellow"></div>
+                <div class="bgyellow"></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="active bggreen"></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="grid3 w-2 h-2 center">
+            <div class="box h-2 w-2 bgblue center">
+                <div class="inner">
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                </div>
+            </div>
+            <div class="run h-1 w-2 center left run3">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="active bgblue"></div>
+                <div></div>
+                <div></div>
+                <div class="bggreen active"></div>
+                <div class="bggreen"></div>
+                <div class="bggreen"></div>
+                <div class="bggreen"></div>
+                <div class="bggreen"></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="active bggreen"></div>
+                <div></div>
+            </div>
+            <div class="box h-2 w-2 bggreen center">
+                <div class="inner">
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                    <div class="rest"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Game Goti  -->
+    <div class="game-goti">
+        <div class="inner"></div>
+    </div>
+
+    <!-- Game Dice -->
+    <div class="dice n1">
+        <div class="inner"></div>
+    </div>
+
+    <script src="ludo.js"></script>
+</body>
+</html>

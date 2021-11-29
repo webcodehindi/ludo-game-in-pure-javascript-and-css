@@ -1,0 +1,661 @@
+:root {
+    --back: rgb(21, 32, 43);
+    --red: rgb(246, 84, 106);
+    --blue: rgb(0, 132, 245);
+    --yellow: rgb(253, 173, 31);
+    --green: rgb(53, 200, 95);
+    --border: rgb(17, 17, 17);
+    --BW: 1px;
+    --dice: 60px;
+    --goti: 90px;
+}
+
+*,
+::after,
+::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--back);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* backgrounds  */
+.bgred {
+    background-color: var(--red);
+}
+
+.bgblue {
+    background-color: var(--blue);
+}
+
+.bgyellow {
+    background-color: var(--yellow);
+}
+
+.bggreen {
+    background-color: var(--green);
+}
+
+/* Heights and Width */
+.h-1 {
+    height: calc(100% - 40%);
+}
+
+.w-1 {
+    width: calc(100% - 40%);
+}
+
+.h-2 {
+    height: 100%;
+}
+
+.w-2 {
+    width: 100%;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.row {
+    flex-direction: row;
+}
+.col {
+    flex-direction: column;
+}
+
+
+/* Game Options  */
+.game-option {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.748);
+    background-blend-mode: darken;
+    user-select: none;
+    transition: 0.4s;
+    z-index: 400;
+}
+
+.game-option.show {
+    transform: scale(1.2);
+}
+
+.game-option .game-card {
+    background-color: rgba(255, 255, 255, 0.727);
+    height: max-content;
+    width: 100%;
+    max-width: 400px;
+    max-height: 500px;
+    flex-direction: column;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.game-option .game-card h2 {
+    margin-bottom: 50px;
+    text-align: center;
+    color: var(--back);
+    text-decoration: underline;
+}
+
+.game-option .option {
+    width: 100%;
+    justify-content: space-around;
+}
+
+.game-option .option div {
+    height: 100px;
+    width: calc(100% / 5);
+    border-radius: 4px;
+    transition: 0.4s;
+    cursor: pointer;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+}
+.game-option .player {
+   margin-top: 50px;
+   font-size: 25px;
+   color: var(--back);
+   font-weight: 800;
+}
+
+.game-option .player div {
+    width: calc(120% / 4);
+}
+
+.game-option .option div:hover,
+.game-option .option div.active {
+    transform: scale(1.2);
+    color: #fff;
+    box-shadow: 5px 5px 29px rgba(0, 0, 0, 0.15);
+}
+
+.game-option .player div.active {
+    background-color: var(--back);
+}
+
+.game-option button {
+    background-color: #fff;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    margin-top: 50px;
+    padding: 10px 20px;
+    background-color: var(--back);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    transition: 0.4s;
+    border-radius: 4px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.game-option button:hover {
+    transform: scale(1.1);
+}
+
+.game-option button:active,
+.game-option .option div:active {
+    transform: scale(1) translateY(5px);
+}
+
+/* Game Board */
+.board {
+    height: 100vh;
+    width: 100vh;
+    max-width: 100vw;
+    max-height: 100vw;
+    background-color: #fff;
+    flex-direction: row;
+    transition: 1s;
+}
+
+.board .grid1,
+.board .grid2,
+.board .grid3 {
+    flex-direction: column;
+}
+
+.win {
+    position: relative;
+    background: linear-gradient(var(--blue), var(--yellow));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.win::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--red);
+    content: '';
+    height: 100%;
+    width: 100%;
+    transform: translateX(-72%) rotateZ(45deg);
+}
+
+.win::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--green);
+    content: '';
+    height: 100%;
+    width: 100%;
+    transform: translateX(72%) rotateZ(45deg);
+}
+
+/* Board Rest Box  */
+.box .inner {
+    height: 80%;
+    width: 80%;
+    background-color: transparent;
+    border: 5px solid #fff;
+    border-radius: 10%;
+    position: relative;
+}
+
+.box .inner .rest {
+    -webkit-tap-highlight-color: transparent;
+    position: absolute;
+    background-color: #fff;
+    height: 35%;
+    width: 35%;
+    border-radius: 10%;
+    transition: 0.4s;
+    cursor: pointer;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+}
+
+.box.active .rest {
+    transition: 0.8s;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.box .inner .rest:hover {
+    box-shadow: none;
+}
+
+.box .inner .rest:nth-child(1) {
+    top: 8%;
+    left: 8%;
+}
+
+.box .inner .rest:nth-child(2) {
+    top: 8%;
+    right: 8%;
+}
+
+.box .inner .rest:nth-child(3) {
+    bottom: 8%;
+    left: 8%;
+}
+
+.box .inner .rest:nth-child(4) {
+    bottom: 8%;
+    right: 8%;
+}
+
+/* run path  */
+.run {
+    flex-wrap: wrap;
+}
+
+.run.right {
+    flex-direction: column;
+}
+
+.run.left {
+    flex-direction: row;
+}
+
+.run.right div {
+    height: calc(100% / 6);
+    width: calc(100% / 3);
+    max-height: calc(100% / 6);
+    position: relative;
+}
+
+.run.left div {
+    height: calc(100% / 3);
+    width: calc(100% / 6);
+    position: relative;
+}
+
+.run div.active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    width: 50%;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.run div.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 30%;
+    width: 30%;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.run div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: var(--BW) solid var(--border);
+    border-bottom: var(--BW) solid var(--border);
+}
+
+.run.right div:nth-child(6),
+.run.right div:nth-child(12),
+.run.right div:nth-child(18) {
+    border-bottom: 0;
+}
+
+.run.right div:nth-child(1),
+.run.right div:nth-child(2),
+.run.right div:nth-child(3),
+.run.right div:nth-child(4),
+.run.right div:nth-child(5),
+.run.right div:nth-child(6) {
+    border-left: var(--BW) solid var(--border);
+}
+
+.run.left div:nth-child(6),
+.run.left div:nth-child(12),
+.run.left div:nth-child(18) {
+    border-right: 0;
+}
+
+.run.left div:nth-child(1),
+.run.left div:nth-child(2),
+.run.left div:nth-child(3),
+.run.left div:nth-child(4),
+.run.left div:nth-child(5),
+.run.left div:nth-child(6) {
+    border-top: var(--BW) solid var(--border);
+}
+
+
+ /* Game goti */
+.goti {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    transition: 0.4s;
+    z-index: 100;
+    transform: translateY(-30%);
+}
+
+.goti div {
+    height: 65%;
+    width: 50%;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1;
+    margin-bottom: 15%;
+}
+.goti div::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: transparent;
+    width: 100%;
+}
+
+.goti.red::after {
+    background-color: var(--red);
+}
+
+.goti.green::after {
+    background-color: var(--green);
+}
+
+.goti.blue::after {
+    background-color: var(--blue);
+}
+
+.goti.yellow::after {
+    background-color: var(--yellow);
+}
+
+.goti::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 92%;
+    content: '';
+    border-radius: 50%;
+    background-color: var(--border);
+    clip-path: polygon(0 0, 100% 0, 100% 53%, 50% 100%, 0 53%);
+}
+
+.goti::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 97%;
+    width: 90%;
+    content: '';
+    border-radius: 50%;
+    clip-path: polygon(0 0, 100% 0, 100% 53%, 50% 100%, 0 53%);
+}
+
+.goti.anime {
+    animation: animate 0.6s ease-in-out infinite;
+}
+
+.goti.move {
+    animation: run 0.3s ease-in-out infinite;
+}
+
+@keyframes animate {
+    0%,
+    100% {
+        transform: translateY(-38%);
+    }
+
+    50% {
+        transform: translateY(-45%) scale(1.1);
+    }
+}
+
+@keyframes run {
+    0%,
+    100% {
+        transform: translateY(-38%);
+    }
+
+    50% {
+        transform: translateY(-85%) scale(1.1);
+    }
+}
+
+.game-goti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: none;
+    width: 100%;
+    background-color: transparent;
+}
+
+.game-goti .inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.game-goti .goti {
+    cursor: pointer;
+    height: var(--goti);
+    width: var(--goti);
+    position: absolute;
+}
+
+
+/* Game dice  */
+.dice {
+    position: absolute;
+    height: var(--dice);
+    width: var(--dice);
+    perspective: 500px;
+    transition: 0.4s;
+    cursor: pointer;
+    background-color: transparent;
+    z-index: 120;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
+}
+
+.dice:active {
+    transform: scale(0.9);
+}
+
+.dice.active {
+    transform: scale(1.5);
+}
+
+.dice.active .inner {
+    animation: rotate 450ms ease-in-out 1;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
+
+.dice .inner {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform-origin: center;
+    transition: 0.2s;
+}
+
+.dice.n6 .inner {
+    transform: none;
+}
+
+.dice.n1 .inner {
+    transform: rotateX(180deg);
+}
+
+.dice.n5 .inner {
+    transform: rotateX(-90deg);
+}
+
+.dice.n4 .inner {
+    transform: rotateY(90deg);
+}
+
+.dice.n3 .inner {
+    transform: rotateX(90deg);
+}
+
+.dice.n2 .inner {
+    transform: rotateY(-90deg);
+}
+
+.dice.red span {
+    background-color: var(--red);
+}
+
+.dice.blue span {
+    background-color: var(--blue);
+}
+
+.dice.yellow span {
+    background-color: var(--yellow);
+}
+
+.dice.green span {
+    background-color: var(--green);
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--back);
+    background-color: #fff;
+}
+
+.face .fin {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.face span {
+    display: block;
+    height: 20%;
+    width: 20%;
+    margin: 5%;
+    background-color: var(--back);
+    border-radius: 50%;
+}
+
+.face:nth-child(4) span:nth-child(1),
+.face:nth-child(5) span:nth-child(1) {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+}
+
+.face:nth-child(4) span:nth-child(2),
+.face:nth-child(5) span:nth-child(2) {
+    position: absolute;
+    right: 10%;
+    top: 10%;
+}
+
+.face:nth-child(4) span:nth-child(3),
+.face:nth-child(5) span:nth-child(3) {
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+}
+
+.face:nth-child(4) span:nth-child(4),
+.face:nth-child(5) span:nth-child(4) {
+    position: absolute;
+    left: 10%;
+    bottom: 10%;
+}
+
+.face:nth-child(1) {
+    transform: translateZ(calc(var(--dice) - (calc(var(--dice) / 2) + var(--dice))));
+}
+
+.face:nth-child(6) {
+    transform: translateZ(calc(var(--dice) / 2));
+}
+
+.face:nth-child(2) {
+    left: 100%;
+    transform: rotateY(90deg) translateX(calc(var(--dice) - (calc(var(--dice) / 2) + var(--dice))));
+    transform-origin: left;
+}
+
+.face:nth-child(4) {
+    right: 100%;
+    transform: rotateY(-90deg) translateX(calc(var(--dice) / 2));
+    transform-origin: right;
+}
+
+.face:nth-child(3) {
+    top: 100%;
+    transform: rotateX(-90deg) translateY(calc(var(--dice) - (calc(var(--dice) / 2) + var(--dice))));
+    transform-origin: top;
+}
+
+.face:nth-child(5) {
+    bottom: 100%;
+    transform: rotateX(90deg) translateY(calc(var(--dice) / 2));
+    transform-origin: bottom;
+}
